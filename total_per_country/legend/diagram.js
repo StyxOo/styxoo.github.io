@@ -8,15 +8,15 @@ const margin = {
     bottom: -10,
     left: 20
 }
-const ourWidth = innerWidth - margin.left - margin.right
-const ourHeight = innerHeight - margin.top - margin.bottom
+
+const contentHeight = innerHeight - margin.top - margin.bottom
 
 const diagramGroup = svg.append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
 const legendParentGroup = diagramGroup.append('g')
     .attr('id', 'legend')
-    // .attr('transform', `translate(${2 * radius + 60}, ${ourHeight/2 + 20})`)
+    // .attr('transform', `translate(${2 * radius + 60}, ${contentHeight/2 + 20})`)
 
 const colors = d3.scaleOrdinal(d3.schemeDark2);
 
@@ -31,7 +31,7 @@ const render = data => {
 
     const legendScale = d3.scaleBand()
         .domain(data.map(d => d.country))
-        .range([0, ourHeight])
+        .range([0, contentHeight])
         .padding(0.3);
 
 
@@ -41,7 +41,7 @@ const render = data => {
             enter => {
                 const entry = enter.append('g')
                     .attr('class', 'entry')
-                    .attr('transform', `translate(0, ${ourHeight})`)
+                    .attr('transform', `translate(0, ${contentHeight})`)
                     .call(enter => enter.transition(t)
                         .attr('transform', d => {
                             return `translate(0, ${legendScale(d.country)})`
@@ -80,23 +80,15 @@ const render = data => {
 
 
 /**
- * This section is only relevant for the implementation of the diagram within the iframe.
- * It tries to subscribe to the parent window for data.
- * If there is no data providing parent, it'll load it's own data.
+ * This section tries to subscribe to the country-data-service for data updates.
+ * The diagram will not work without the country-data-service.
  */
 try {
-    parent.registerCountryDiagramRenderCallback(render)
-    console.log('Could successfully subscribe to parent for data updates')
+    parent.registerCountryDiagramRenderCallback(render);
+    console.log('Could successfully subscribe to the country-data-service for data updates.');
 } catch (e) {
-    console.log('Data is not provided externally. Loading data directly')
-    const dataPath = '../total_refugees_per_country_condensed.csv';
+    console.log('Could not subscribe to the country-data-service for data updates. ' +
+        'Data is loaded directly.');
 
-// .csv creates a promise, when it resolves .then do something else
-    d3.csv(dataPath).then(data => {
-        data.forEach(d => {                         // Foreach data-point in data
-            d.refugees = +d.refugees;           // Cast value to float and take times 1000
-            d.country = `${d.country}`;             // Kind of unnecessary, but fixed webstorm complaining
-        });
-        render(data);
-    })
+    loadCountryData(render)
 }

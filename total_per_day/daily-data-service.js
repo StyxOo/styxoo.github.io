@@ -1,6 +1,3 @@
-const DailyDataPath = './total_per_day/total_refugees_daily_condensed.csv';
-const dailyDataPath = './total_per_day/2022-07-23_crossings_daily.json';
-
 const dailyTBody = document.getElementById('tBody-daily')
 const sliderStartLabel = document.getElementById('startDate')
 const sliderCurrentLabel = document.getElementById('currentDate')
@@ -74,7 +71,7 @@ const displayToDate = display => {
     return new Date(+values[2], +values[1] - 1, +values[0])
 }
 
-let autoUpdateDaily = false
+let autoUpdateDaily = true
 
 const autoUpdateDailyData = checkbox => {
     autoUpdateDaily = checkbox.checked
@@ -174,8 +171,7 @@ timeSlider.addEventListener('change', (e) => {
 })
 
 const timeValue = () => {
-    const value01 = timeSlider.value/100
-    return value01
+    return timeSlider.value / 100
 }
 
 /**
@@ -185,7 +181,7 @@ const timeValue = () => {
  */
 const dailyDiagramRenderCallbacks = []
 
-window.registerDiagramRenderCallback = (callback) =>
+window.registerDailyDiagramRenderCallback = (callback) =>
 {
     dailyDiagramRenderCallbacks.push(callback)
 
@@ -203,40 +199,19 @@ const renderDailyDiagrams = () => {
     for (const diagramRenderCallback of dailyDiagramRenderCallbacks) {
         diagramRenderCallback(latestDailyData, timeValue())
     }
-
-    /**
-     * Use the short section below to automatically change the data after 2 seconds
-     */
-    // setTimeout(()=>{
-    //     latestData.pop()
-    //
-    //     for (const diagramRenderCallback of diagramRenderCallbacks) {
-    //         diagramRenderCallback(latestData)
-    //     }
-    // }, 2000)
 }
 
 /**
  * The following loads the data from the csv and prefills the data table
  */
 
-d3.json(dailyDataPath).then(data => {
-    console.log("Read daily data JSON:");
-    console.log(data);
-    let newData = [];
-    newData.columns = ['date', 'refugees'];
+const loadDailyDataCallback = data => {
+    fillTable(data);
 
-    data.data.timeseries.forEach(entry => {
-        newData.push({'date': new Date(entry.data_date), 'refugees': entry.individuals})
-    })
-
-    console.log('Loaded daily data:')
-    console.log(newData)
-
-    fillTable(newData);
-
-    latestDailyData = newData;
-    updateSliderLimits()
+    latestDailyData = data;
+    updateSliderLimits();
     renderDailyDiagrams();
-})
+}
+
+loadDailyData(loadDailyDataCallback);
 

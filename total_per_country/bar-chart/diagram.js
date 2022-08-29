@@ -1,6 +1,6 @@
 /**
  * This script was created as part of a bachelor thesis.
- * The results can be found here: https://github.com/StyxOo/styxoo.github.io
+ * For more information, visit: https://github.com/StyxOo/styxoo.github.io
  * Author: Luis Rothenhäusler
  * Last edit: 25th August 2022
  *
@@ -72,7 +72,7 @@ const render = data => {
         .range([0, contentWidth])
         .nice();
 
-    // The yScale is used to convert country to the applicable y coordinate.
+    // The yScale is used to convert the country to the applicable y coordinate.
     // It is also used while creating the y-axis legend.
     const yScale = d3.scaleBand()
         .domain(data.map(d => d.country))

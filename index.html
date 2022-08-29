@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    <meta name="author" content="Luis Rothenhäusler">
+    <meta name="description" content="This html page was created as part of a bachelor thesis. Visit https://github.com/StyxOo/styxoo.github.io for more information">
+    <meta name="revised" content="29th August 2022">
+
     <title>Showcase</title>
+
     <link rel="stylesheet" href="index.css">
 
     <!-- Import D3.js libraries -->
@@ -11,26 +17,30 @@
 <body>
 <div class="main-grid">
     <div class="main-headline">
-        This is the Showcase
+        This is a showcase about d3js and its possibilities.
+    </div>
+    <div class="sub-headline">
+        All data used in the creation of this showcase is about the currently ongoing armed conflict in the Ukraine.
+        This showcase has been created as part of a bachelor thesis. Visit <a href="https://github.com/StyxOo/styxoo.github.io">here</a> for more information.
     </div>
     <div class="topic">
-        <div class="topic-headline">Refugees per Country</div>
+        <div class="topic-headline">Refugees per country they crossed into</div>
         <div class="content">
             <div class="diagrams">
                 <div class="diagram-label">Bar chart
-                    <iframe class="diagram" src="./total_per_country/bar-chart/diagram.html" frameborder="01"
+                    <iframe id="barChartFrame" class="diagram" src="./total_per_country/bar-chart/diagram.html" frameborder="01"
                             height="100%" width="100%"></iframe>
                 </div>
                 <div class="diagram-label">Donut chart
-                    <iframe class="diagram" src="total_per_country/donut-chart/diagram.html" frameborder="01"
+                    <iframe id="donutChartFrame" class="diagram" src="total_per_country/donut-chart/diagram.html" frameborder="01"
                             height="100%" width="100%"></iframe>
                 </div>
                 <div class="diagram-label">Tree map
-                    <iframe class="diagram" src="./total_per_country/tree-map/diagram.html" frameborder="01"
+                    <iframe id="treeMapFrame"  class="diagram" src="./total_per_country/tree-map/diagram.html" frameborder="01"
                             height="100%" width="100%"></iframe>
                 </div>
                 <div class="diagram-label">Sankey graph
-                    <iframe class="diagram" src="./total_per_country/sankey/diagram.html" frameborder="01" height="100%"
+                    <iframe id="sankeyFrame" class="diagram" src="./total_per_country/sankey/diagram.html" frameborder="01" height="100%"
                             width="100%"></iframe>
                 </div>
             </div>
@@ -59,17 +69,19 @@
                         <tbody id="tBody_per_country"></tbody>
                         <tfoot>
                         <tr>
+                            <td colspan="3">
+                                <input id="addRowButton" type="button" value="Add Row" onclick="addCountryRow()">
+                            </td>
+                        </tr>
+                        <tr>
                             <td>
                                 <div class="autUpdateData">
                                     <label for="autoUpdateCountry">Auto Update</label>
                                     <input type="checkbox" id="autoUpdateCountry" onclick="autoUpdateCountryData(this)" checked>
                                 </div>
                             </td>
-                            <td>
+                            <td colspan="2">
                                 <input class="button" type="button" value="Update data" onclick="updateCountryData()">
-                            </td>
-                            <td>
-                                <input type="button" value="Add New Row" onclick="addCountryRow()">
                             </td>
                         </tr>
                         </tfoot>
@@ -81,15 +93,15 @@
         </div>
     </div>
     <div class="topic">
-        <div class="topic-headline">Total Refugees per Day</div>
+        <div class="topic-headline">Cumulative refugees per day</div>
         <div class="content">
             <div class="diagrams">
                 <div class="diagram-label">Circle graph
-                    <iframe class="diagram" src="./total_per_day/circle/diagram.html" frameborder="01"
+                    <iframe id="circleGraphFrame" class="diagram" src="./total_per_day/circle/diagram.html" frameborder="01"
                             width="100%"></iframe>
                 </div>
                 <div class="diagram-label">Area graph
-                    <iframe class="diagram" src="./total_per_day/area/diagram.html" frameborder="01"
+                    <iframe id="areaGraphFrame" class="diagram" src="./total_per_day/area/diagram.html" frameborder="01"
                             width="100%"></iframe>
                 </div>
             </div>
@@ -156,14 +168,16 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td colspan="2">
+                                <input class="button" type="button" value="Update data" onclick="updateDailyData()">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
                                 <div class="autUpdateData">
                                     <label for="autoUpdateDaily">Auto Update</label>
                                     <input type="checkbox" id="autoUpdateDaily" onclick="autoUpdateDailyData(this)" checked>
                                 </div>
-                            </td>
-                            <td>
-                                <input class="button" type="button" value="Update data" onclick="updateDailyData()">
                             </td>
                         </tr>
                         </tfoot>

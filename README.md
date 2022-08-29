@@ -1,7 +1,7 @@
 # Introduction
 This project was created as part of the bachelor thesis about "[d3js](https://d3js.org/) and its potential in data visualization".
 It was created by Luis Rothenhäusler between the 7th of July 2022 and the 1st of September 2022. 
-The full thesis can be found in the thesis.pdf.
+The full thesis can be found in the [thesis.pdf](https://github.com/StyxOo/styxoo.github.io/blob/main/thesis.pdf).
 
 ## What is this about?
 As the thesis tries to evaluate the potential of the d3js library, a showcase was created to get a deeper understanding about the d3js library.
